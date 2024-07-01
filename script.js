@@ -37,6 +37,7 @@ function operate(numberOne, numberTwo, operator) {
 let numberOne = 0
 let numbertwo = 0
 let operator = ''
+let displayValue = ''
 
 document.querySelector('.buttons').addEventListener('click', function(event) {
     let target = event.target;
@@ -45,7 +46,16 @@ document.querySelector('.buttons').addEventListener('click', function(event) {
     if (target.tagName === 'I') {
         target = target.parentElement;
     }
-    console.log(target);
+
+    let datasetValue = target.dataset.value
+    let displayCalc = document.querySelector('.display-calc')
+    console.log(displayCalc.textContent)
+    console.log(datasetValue)
+    
+    if (datasetValue === '1') {
+        console.log('yes')
+        displayCalc.textContent = datasetValue
+    }
 })
 
 document.addEventListener('keydown', function(event) {
