@@ -24,21 +24,43 @@ function roundAndTrim(number, decimals) {
 
 // Function that calls correct Math function depending on operator variable
 function operate(numberOne, numberTwo, operator) {
-    if (operator === '+') {
+    if (operator === ' + ') {
         return addition(numberOne, numberTwo)
     }
 
-    if (operator === '-') {
+    if (operator === ' - ') {
         return subtraction(numberOne, numberTwo)
     }
 
-    if (operator === '*') {
+    if (operator === ' * ') {
         return multiplication(numberOne, numberTwo)
     }
 
-    if (operator === '/') {
+    if (operator === ' / ') {
         let resultOfDivision = division(numberOne, numberTwo)
         return roundAndTrim(resultOfDivision, 5)
+    }
+}
+
+function assignVariables(operator) {
+    if (numberOne === null && numberTwo === null) {
+        displayCalc.textContent += operator
+        numberOne = Number(currentNumber)
+        currentNumber = ''
+        operator = operator
+        
+        console.log(numberOne)
+        console.log(currentNumber)
+    } else if (numberOne !== null && numberTwo === null) {
+        displayCalc.textContent += operator
+        numberTwo = Number(currentNumber)
+        currentNumber = ''
+        operator = operator
+
+        let resultOfDivision = operate(numberOne, numberTwo, operator)
+        resultCalc.textContent = resultOfDivision
+        numberOne = resultOfDivision
+        numberTwo = null
     }
 }
 
@@ -93,33 +115,16 @@ document.querySelector('.buttons').addEventListener('click', function(event) {
         deleteDigit()
 
     } else if (datasetValue === 'divide') {
-        displayCalc.textContent += ' / '
-        if (numberOne === null && numberTwo === null) {
-            numberOne = Number(currentNumber)
-            currentNumber = ''
-            operator = '/'
-            
-            console.log(numberOne)
-            console.log(currentNumber)
-        } else if (numberOne !== null && numberTwo === null) {
-            numberTwo = Number(currentNumber)
-            currentNumber = ''
-            operator = '/'
-
-            let resultOfDivision = operate(numberOne, numberTwo, operator)
-            resultCalc.textContent = resultOfDivision
-            numberOne = resultOfDivision
-            numberTwo = null
-        }
+        assignVariables(' / ')
 
     } else if (datasetValue === 'multiply') {
-        console.log('multiply')
+        assignVariables(' * ')
 
     } else if (datasetValue === 'plus') {
-        console.log('plus')
+        assignVariables(' + ')
 
     } else if (datasetValue === 'minus') {
-        console.log('minus')
+        assignVariables(' - ')
 
     } else if (datasetValue === 'decimal') {
         console.log('decimal')
