@@ -15,6 +15,13 @@ function division(numberOne, numberTwo) {
     return numberOne / numberTwo
 }
 
+// Helper function for trimming trailing zeros
+function roundAndTrim(number, decimals) {
+    let roundedString = number.toFixed(decimals);
+    let trimmedString = roundedString.replace(/(\.\d*[1-9])0+|\.0*$/, '$1');
+    return parseFloat(trimmedString);
+}
+
 // Function that calls correct Math function depending on operator variable
 function operate(numberOne, numberTwo, operator) {
     if (operator === '+') {
@@ -30,7 +37,8 @@ function operate(numberOne, numberTwo, operator) {
     }
 
     if (operator === '/') {
-        return division(numberOne, numberTwo)
+        let resultOfDivision = division(numberOne, numberTwo)
+        return roundAndTrim(resultOfDivision, 5)
     }
 }
 
@@ -74,6 +82,7 @@ document.querySelector('.buttons').addEventListener('click', function(event) {
     if (/^\d$/.test(datasetValue) && currentNumber.length < MAX_LENGTH) {
         currentNumber += datasetValue
         displayCalc.textContent = currentNumber
+        console.log(currentNumber)
 
     } else if (datasetValue === 'clear') {
         console.log('clear')
@@ -84,17 +93,23 @@ document.querySelector('.buttons').addEventListener('click', function(event) {
         deleteDigit()
 
     } else if (datasetValue === 'divide') {
-        console.log('divide')
         displayCalc.textContent += ' / '
         if (numberOne === null && numberTwo === null) {
             numberOne = Number(currentNumber)
-            operator = '/'
             currentNumber = ''
+            operator = '/'
             
             console.log(numberOne)
             console.log(currentNumber)
         } else if (numberOne !== null && numberTwo === null) {
-            numberTwo = 0
+            numberTwo = Number(currentNumber)
+            currentNumber = ''
+            operator = '/'
+
+            let resultOfDivision = operate(numberOne, numberTwo, operator)
+            resultCalc.textContent = resultOfDivision
+            numberOne = resultOfDivision
+            numberTwo = null
         }
 
     } else if (datasetValue === 'multiply') {
