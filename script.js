@@ -34,7 +34,7 @@ function operate(numberOne, numberTwo, operator) {
     }
 }
 
-let currentNumber = null
+let currentNumber = ''
 let numberOne = null
 let numberTwo = null
 let operator = ''
@@ -49,15 +49,15 @@ function clearDisplay() {
     numberOne = 0
     numberTwo = 0
     operator = ''
-    displayValue = ''
+    currentNumber = ''
     displayCalc.textContent = ''
     resultCalc.textContent = ''
 }
 
 function deleteDigit() {
-    let displayValueSliced = displayValue.slice(0, -1)
-    displayCalc.textContent = displayValueSliced
-    displayValue = displayValueSliced
+    let numberDeleteLast = currentNumber.slice(0, -1)
+    displayCalc.textContent = numberDeleteLast
+    currentNumber = numberDeleteLast
 }
 
 document.querySelector('.buttons').addEventListener('click', function(event) {
@@ -71,9 +71,9 @@ document.querySelector('.buttons').addEventListener('click', function(event) {
     let datasetValue = target.dataset.value
     let displayCalc = document.querySelector('.display-calc')
     
-    if (/^\d$/.test(datasetValue) && displayValue.length < MAX_LENGTH) {
-        displayValue += datasetValue
-        displayCalc.textContent = displayValue
+    if (/^\d$/.test(datasetValue) && currentNumber.length < MAX_LENGTH) {
+        currentNumber += datasetValue
+        displayCalc.textContent = currentNumber
 
     } else if (datasetValue === 'clear') {
         console.log('clear')
@@ -87,12 +87,12 @@ document.querySelector('.buttons').addEventListener('click', function(event) {
         console.log('divide')
         displayCalc.textContent += ' / '
         if (numberOne === null && numberTwo === null) {
-            numberOne = Number(displayValue)
+            numberOne = Number(currentNumber)
             operator = '/'
-            displayValue = ''
+            currentNumber = ''
             
             console.log(numberOne)
-            console.log(displayValue)
+            console.log(currentNumber)
         } else if (numberOne !== null && numberTwo === null) {
             numberTwo = 0
         }
