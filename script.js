@@ -25,15 +25,18 @@ function roundAndTrim(number, decimals) {
 // Function that calls correct Math function depending on operator variable
 function operate(numberOne, numberTwo, operator) {
     if (operator === ' + ') {
-        return addition(numberOne, numberTwo)
+        let resultOfAddition = addition(numberOne, numberTwo)
+        return roundAndTrim(resultOfAddition, 5)
     }
 
     if (operator === ' - ') {
-        return subtraction(numberOne, numberTwo)
+        let resultOfSubtraction = subtraction(numberOne, numberTwo)
+        return roundAndTrim(resultOfSubtraction, 5)
     }
 
     if (operator === ' * ') {
-        return multiplication(numberOne, numberTwo)
+        let resultOfMultiplication = multiplication(numberOne, numberTwo)
+        return roundAndTrim(resultOfMultiplication, 5)
     }
 
     if (operator === ' / ') {
@@ -48,18 +51,20 @@ function assignVariables(operator) {
         numberOne = Number(currentNumber)
         currentNumber = ''
         operator = operator
-        
+        console.log('FIRST BLOCK EXECUTED')
         console.log(numberOne)
         console.log(currentNumber)
     } else if (numberOne !== null && numberTwo === null) {
         displayCalc.textContent += operator
         numberTwo = Number(currentNumber)
         currentNumber = ''
-        operator = operator
+        
+        console.log(operator)
+        let resultOfOperation = operate(numberOne, numberTwo, operator)
 
-        let resultOfDivision = operate(numberOne, numberTwo, operator)
-        resultCalc.textContent = resultOfDivision
-        numberOne = resultOfDivision
+        operator = operator
+        resultCalc.textContent = resultOfOperation
+        numberOne = resultOfOperation
         numberTwo = null
     }
 }
@@ -104,7 +109,6 @@ document.querySelector('.buttons').addEventListener('click', function(event) {
     if (/^\d$/.test(datasetValue) && currentNumber.length < MAX_LENGTH) {
         currentNumber += datasetValue
         displayCalc.textContent = currentNumber
-        console.log(currentNumber)
 
     } else if (datasetValue === 'clear') {
         console.log('clear')
