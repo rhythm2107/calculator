@@ -37,3 +37,18 @@ function operate(numberOne, numberTwo, operator) {
 let numberOne = 0
 let numbertwo = 0
 let operator = ''
+
+document.querySelector('.buttons').addEventListener('click', function(event) {
+    let target = event.target;
+    
+    // Check if the clicked element is an icon
+    if (target.tagName === 'I') {
+        target = target.parentElement;
+    }
+    console.log(target);
+})
+
+document.addEventListener('keydown', function(event) {
+    const key = event.key
+    console.log(key)
+})
