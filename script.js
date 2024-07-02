@@ -35,6 +35,7 @@ function checkLastCharacter(str) {
     else if (!isNaN(parseInt(lastChar))) {
         return 'number';
     }
+    console.log('other')
     return 'other'; // Return a default value for other characters
 }
 
@@ -83,11 +84,28 @@ function assignVariables(newOperator) {
             numberOne = resultOfOperation
             numberTwo = null
         }
-    } else if (lastDisplayChar === 'space') {
+        
+    } else if (lastDisplayChar === 'space' && operator === ' - ' && newOperator === ' - ') {
+        if (currentNumber === '-') {
+            console.log('current number is just minus nothing else')
+        } else {
+            console.log('operator is minus')
+            currentNumber += '-'
+            displayCalc.textContent += '-'
+        }
+        
+    } // Logic for switching operators if you click them in a row 
+    else if (lastDisplayChar === 'space') {
         console.log('before', displayCalc.textContent)
         let removeOperator = displayCalc.textContent.slice(0, -3) + newOperator
         displayCalc.textContent = removeOperator
         operator = newOperator
+
+    }
+    else if (lastDisplayChar === 'none' && newOperator === ' - ') {
+        console.log('Minus was clicked')
+        displayCalc.textContent += '-'
+        currentNumber += '-'
     }
 
     
