@@ -189,7 +189,7 @@ document.querySelector('.buttons').addEventListener('click', function(event) {
     if (/^\d$/.test(datasetValue) && currentNumber.length < MAX_LENGTH) {
         let lastDisplayChar = checkLastCharacter(displayCalc.textContent)
 
-        if (lastDisplayChar === 'none' || lastDisplayChar === 'number') {
+        if (lastDisplayChar === 'none' || lastDisplayChar === 'number' || lastDisplayChar == 'other') {
             let currentCalcDisplay = displayCalc.textContent
 
             if (currentNumber === '0') {
