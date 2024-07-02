@@ -188,18 +188,20 @@ document.querySelector('.buttons').addEventListener('click', function(event) {
     // Check if button clicked is a digit
     if (/^\d$/.test(datasetValue) && currentNumber.length < MAX_LENGTH) {
         let lastDisplayChar = checkLastCharacter(displayCalc.textContent)
-        console.log(`Current character: ${lastDisplayChar}`)
 
         if (lastDisplayChar === 'none' || lastDisplayChar === 'number') {
-            console.log('First executed')
             let currentCalcDisplay = displayCalc.textContent
-            currentNumber += datasetValue
-            currentDigit = datasetValue
-            displayCalc.textContent = `${currentCalcDisplay}${currentDigit}`
+
+            if (currentNumber === '0') {
+                currentNumber = datasetValue
+                displayCalc.textContent = currentCalcDisplay.slice(0, -1) + datasetValue
+            } else {
+                currentNumber += datasetValue
+                displayCalc.textContent = `${currentCalcDisplay}${datasetValue}`
+            }
         }
 
         if (lastDisplayChar === 'space') {
-            console.log('Second executed')
             let currentCalcDisplay = displayCalc.textContent
             currentNumber += datasetValue
             currentDigit = datasetValue
