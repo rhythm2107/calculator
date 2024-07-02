@@ -39,6 +39,26 @@ function checkLastCharacter(str) {
     return 'other'; // Return a default value for other characters
 }
 
+function checkOperand(str) {
+    const lastChar = str.charAt(str.length - 2);
+
+    if (lastChar === '-') {
+        return '-'
+    }
+    
+    if (lastChar === '+') {
+        return '+'
+    }
+
+    if (lastChar === '/') {
+        return '/'
+    }
+
+    if (lastChar === '*') {
+        return '*'
+    }
+}
+
 
 // Function that calls correct Math function depending on operator variable
 function operate(numberOne, numberTwo, operator) {
