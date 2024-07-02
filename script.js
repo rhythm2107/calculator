@@ -63,23 +63,34 @@ function operate(numberOne, numberTwo, operator) {
 }
 
 function assignVariables(newOperator) {
-    if (numberOne === null && numberTwo === null) {
-        displayCalc.textContent += newOperator
-        numberOne = Number(currentNumber)
-        currentNumber = ''
+    let lastDisplayChar = checkLastCharacter(displayCalc.textContent)
+    if (lastDisplayChar === 'number') {
+        if (numberOne === null && numberTwo === null) {
+            displayCalc.textContent += newOperator
+            numberOne = Number(currentNumber)
+            currentNumber = ''
+            operator = newOperator
+    
+        } else if (numberOne !== null && numberTwo === null) {
+            numberTwo = Number(currentNumber)
+            currentNumber = ''
+            let resultOfOperation = operate(numberOne, numberTwo, operator)
+    
+            operator = newOperator
+            resultCalc.textContent = resultOfOperation
+            displayCalc.textContent = resultOfOperation
+            displayCalc.textContent += newOperator
+            numberOne = resultOfOperation
+            numberTwo = null
+        }
+    } else if (lastDisplayChar === 'space') {
+        console.log('before', displayCalc.textContent)
+        let removeOperator = displayCalc.textContent.slice(0, -3) + newOperator
+        displayCalc.textContent = removeOperator
         operator = newOperator
-
-    } else if (numberOne !== null && numberTwo === null) {
-        displayCalc.textContent += newOperator
-        numberTwo = Number(currentNumber)
-        currentNumber = ''
-        let resultOfOperation = operate(numberOne, numberTwo, operator)
-
-        operator = newOperator
-        resultCalc.textContent = resultOfOperation
-        numberOne = resultOfOperation
-        numberTwo = null
     }
+
+    
 }
 
 let currentNumber = ''
@@ -97,10 +108,15 @@ const displayCalc = document.querySelector('.display-calc')
 const resultCalc = document.querySelector('.display-result')
 
 function clearDisplay() {
-    numberOne = 0
-    numberTwo = 0
-    operator = ''
     currentNumber = ''
+    numberOne = null
+    numberTwo = null
+    operator = ''
+    displayValueC = ''
+    displayValueR = ''
+    lastOperand = null
+    lastOperator = ''
+    
     displayCalc.textContent = ''
     resultCalc.textContent = ''
 }
@@ -176,8 +192,13 @@ document.querySelector('.buttons').addEventListener('click', function(event) {
     } else if (datasetValue === 'decimal') {
         console.log('decimal');
         if (!currentNumber.includes('.')) {
-            currentNumber += '.';
-            displayCalc.textContent += '.';
+            if (currentNumber.length === 0) {
+                currentNumber += '0.';
+                displayCalc.textContent += '0.';
+            } else {
+                currentNumber += '.';
+                displayCalc.textContent += '.';
+            }
         }
 
     } else if (datasetValue === 'equals') {
