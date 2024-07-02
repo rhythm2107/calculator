@@ -92,8 +92,10 @@ function assignVariables(newOperator) {
             currentNumber = ''
             operator = newOperator
     
-        } else if (numberOne !== null && numberTwo === null) {
+        } else if (numberOne !== null && numberTwo === null && equalClicked === false) {
+            console.log('EXECUTED')
             numberTwo = Number(currentNumber)
+            console.log('current number', numberTwo)
             currentNumber = ''
             let resultOfOperation = operate(numberOne, numberTwo, operator)
     
@@ -103,6 +105,12 @@ function assignVariables(newOperator) {
             displayCalc.textContent += newOperator
             numberOne = resultOfOperation
             numberTwo = null
+            
+        } else if (equalClicked === true) {
+            equalClicked = false
+            operator = newOperator
+            displayCalc.textContent = resultCalc.textContent
+            displayCalc.textContent += operator
         }
         
     } // Logic for switching operators if you click them in a row 
@@ -112,7 +120,7 @@ function assignVariables(newOperator) {
         displayCalc.textContent = removeOperator
         operator = newOperator
 
-    }
+    } // Logic for numberOne being negative
     else if (lastDisplayChar === 'none' && newOperator === ' - ') {
         console.log('Minus was clicked')
         displayCalc.textContent += '-'
@@ -130,6 +138,7 @@ let displayValueC = ''
 let displayValueR = ''
 let lastOperand = null
 let lastOperator = ''
+let equalClicked = false
 
 const MAX_LENGTH = 16
 
@@ -233,7 +242,6 @@ document.querySelector('.buttons').addEventListener('click', function(event) {
     } else if (datasetValue === 'equals') {
         console.log('equals')
         if (numberOne != null && currentNumber !== '') {
-            console.log('test')
             numberTwo = Number(currentNumber)
             let resultOfOperation = operate(numberOne, numberTwo, operator)
             resultCalc.textContent = resultOfOperation
@@ -243,8 +251,8 @@ document.querySelector('.buttons').addEventListener('click', function(event) {
             numberTwo = null
             currentNumber = ''
             operator = ''
+            equalClicked = true
         } else if (numberOne !== null && lastOperator && lastOperand !== null) {
-            console.log('hey')
             let resultOfOperation = operate(numberOne, lastOperand, lastOperator)
             resultCalc.textContent = resultOfOperation
             numberOne = resultOfOperation
