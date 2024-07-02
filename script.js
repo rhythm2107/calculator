@@ -88,6 +88,7 @@ let numberOne = null
 let numberTwo = null
 let operator = ''
 let displayValue = ''
+let firstHalfDisplay = ''
 
 const MAX_LENGTH = 16
 
@@ -131,8 +132,19 @@ document.querySelector('.buttons').addEventListener('click', function(event) {
     let displayCalc = document.querySelector('.display-calc')
     
     if (/^\d$/.test(datasetValue) && currentNumber.length < MAX_LENGTH) {
-        currentNumber += datasetValue
-        displayCalc.textContent = currentNumber
+        let currentDisplay = displayCalc.textContent
+        let lastDisplayChar = checkLastCharacter(currentDisplay)
+
+        if (lastDisplayChar === 'space') {
+            console.log('space')
+            firstHalfDisplay = displayCalc.textContent
+            currentNumber += datasetValue
+            displayCalc.textContent = `${firstHalfDisplay}${currentNumber}`
+        }
+        else if (lastDisplayChar === 'number') {
+            currentNumber += datasetValue
+            displayCalc.textContent = currentNumber
+        }
 
     } else if (datasetValue === 'clear') {
         console.log('clear')
