@@ -60,18 +60,12 @@ function operate(numberOne, numberTwo, operator) {
 function assignVariables(newOperator) {
     if (numberOne === null && numberTwo === null) {
         displayCalc.textContent += newOperator
-        console.log(displayCalc.textContent)
-        console.log(displayCalc.textContent.length)
-        console.log(checkLastCharacter(displayCalc.textContent))
         numberOne = Number(currentNumber)
         currentNumber = ''
         operator = newOperator
 
     } else if (numberOne !== null && numberTwo === null) {
         displayCalc.textContent += newOperator
-        console.log(displayCalc.textContent)
-        console.log(displayCalc.textContent.length)
-        console.log(checkLastCharacter(displayCalc.textContent))
         numberTwo = Number(currentNumber)
         currentNumber = ''
         let resultOfOperation = operate(numberOne, numberTwo, operator)
@@ -136,14 +130,16 @@ document.querySelector('.buttons').addEventListener('click', function(event) {
         let lastDisplayChar = checkLastCharacter(currentDisplay)
 
         if (lastDisplayChar === 'space') {
-            console.log('space')
-            firstHalfDisplay = displayCalc.textContent
+            let currentCalcDisplay = displayCalc.textContent
             currentNumber += datasetValue
-            displayCalc.textContent = `${firstHalfDisplay}${currentNumber}`
+            currentDigit = datasetValue
+            displayCalc.textContent = `${currentCalcDisplay}${currentDigit}`
         }
         else if (lastDisplayChar === 'number') {
+            let currentCalcDisplay = displayCalc.textContent
             currentNumber += datasetValue
-            displayCalc.textContent = currentNumber
+            currentDigit = datasetValue
+            displayCalc.textContent = `${currentCalcDisplay}${currentDigit}`
         }
 
     } else if (datasetValue === 'clear') {
