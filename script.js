@@ -105,15 +105,6 @@ function assignVariables(newOperator) {
             numberTwo = null
         }
         
-    } else if (lastDisplayChar === 'space' && operator === ' - ' && newOperator === ' - ') {
-        if (currentNumber === '-') {
-            console.log('current number is just minus nothing else')
-        } else {
-            console.log('operator is minus')
-            currentNumber += '-'
-            displayCalc.textContent += '-'
-        }
-        
     } // Logic for switching operators if you click them in a row 
     else if (lastDisplayChar === 'space') {
         console.log('before', displayCalc.textContent)
@@ -168,7 +159,7 @@ function deleteDigit() {
         console.log('removed operator', removedOperator)
         displayCalc.textContent = removedOperator
         operator = ''
-    } else if (lastDisplayChar = 'number') {
+    } else if (lastDisplayChar === 'number') {
         let numberDeleteLast = currentNumber.slice(0, -1)
         displayCalc.textContent = numberDeleteLast
         currentNumber = numberDeleteLast
