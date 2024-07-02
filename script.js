@@ -22,6 +22,18 @@ function roundAndTrim(number, decimals) {
     return parseFloat(trimmedString);
 }
 
+//Helper function to check last character in calc display
+function checkLastCharacter(str) {
+    const lastChar = str.charAt(str.length - 1)
+
+    if (lastChar === ' ') {
+        return 'space'
+    }
+    else if (!isNaN(lastChar)) {
+        return 'number'
+    }
+}
+
 // Function that calls correct Math function depending on operator variable
 function operate(numberOne, numberTwo, operator) {
     if (operator === ' + ') {
@@ -45,24 +57,26 @@ function operate(numberOne, numberTwo, operator) {
     }
 }
 
-function assignVariables(operator) {
+function assignVariables(newOperator) {
     if (numberOne === null && numberTwo === null) {
-        displayCalc.textContent += operator
+        displayCalc.textContent += newOperator
+        console.log(displayCalc.textContent)
+        console.log(displayCalc.textContent.length)
+        console.log(checkLastCharacter(displayCalc.textContent))
         numberOne = Number(currentNumber)
         currentNumber = ''
-        operator = operator
-        console.log('FIRST BLOCK EXECUTED')
-        console.log(numberOne)
-        console.log(currentNumber)
+        operator = newOperator
+
     } else if (numberOne !== null && numberTwo === null) {
-        displayCalc.textContent += operator
+        displayCalc.textContent += newOperator
+        console.log(displayCalc.textContent)
+        console.log(displayCalc.textContent.length)
+        console.log(checkLastCharacter(displayCalc.textContent))
         numberTwo = Number(currentNumber)
         currentNumber = ''
-        
-        console.log(operator)
         let resultOfOperation = operate(numberOne, numberTwo, operator)
 
-        operator = operator
+        operator = newOperator
         resultCalc.textContent = resultOfOperation
         numberOne = resultOfOperation
         numberTwo = null
@@ -90,9 +104,19 @@ function clearDisplay() {
 }
 
 function deleteDigit() {
-    let numberDeleteLast = currentNumber.slice(0, -1)
-    displayCalc.textContent = numberDeleteLast
-    currentNumber = numberDeleteLast
+    let currentDisplay = displayCalc.textContent
+    let lastDisplayChar = checkLastCharacter(currentDisplay)
+
+    if (lastDisplayChar === 'space') {
+        let removedOperator = currentDisplay.slice(0, -3)
+        console.log('removed operator', removedOperator)
+        displayCalc.textContent = removedOperator
+        operator = ''
+    } else if (lastDisplayChar = 'number') {
+        let numberDeleteLast = currentNumber.slice(0, -1)
+        displayCalc.textContent = numberDeleteLast
+        currentNumber = numberDeleteLast
+    }
 }
 
 document.querySelector('.buttons').addEventListener('click', function(event) {
