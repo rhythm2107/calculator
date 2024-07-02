@@ -105,7 +105,7 @@ function assignVariables(newOperator) {
             displayCalc.textContent += newOperator
             numberOne = resultOfOperation
             numberTwo = null
-            
+
         } else if (equalClicked === true) {
             equalClicked = false
             operator = newOperator
@@ -187,8 +187,7 @@ document.querySelector('.buttons').addEventListener('click', function(event) {
     
     // Check if button clicked is a digit
     if (/^\d$/.test(datasetValue) && currentNumber.length < MAX_LENGTH) {
-        let lastDisplayChar = checkLastCharacter(displayValueC)
-        console.log(displayValueC)
+        let lastDisplayChar = checkLastCharacter(displayCalc.textContent)
         console.log(`Current character: ${lastDisplayChar}`)
 
         if (lastDisplayChar === 'none' || lastDisplayChar === 'number') {
