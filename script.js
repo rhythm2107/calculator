@@ -24,15 +24,20 @@ function roundAndTrim(number, decimals) {
 
 //Helper function to check last character in calc display
 function checkLastCharacter(str) {
-    const lastChar = str.charAt(str.length - 1)
+    const lastChar = str.charAt(str.length - 1);
 
+    if (str.length === 0) {
+        return 'none'
+    }
     if (lastChar === ' ') {
-        return 'space'
+        return 'space';
+    } 
+    else if (!isNaN(parseInt(lastChar))) {
+        return 'number';
     }
-    else if (!isNaN(lastChar)) {
-        return 'number'
-    }
+    return 'other'; // Return a default value for other characters
 }
+
 
 // Function that calls correct Math function depending on operator variable
 function operate(numberOne, numberTwo, operator) {
@@ -81,8 +86,10 @@ let currentNumber = ''
 let numberOne = null
 let numberTwo = null
 let operator = ''
-let displayValue = ''
-let firstHalfDisplay = ''
+let displayValueC = ''
+let displayValueR = ''
+let lastOperand = null
+let lastOperator = ''
 
 const MAX_LENGTH = 16
 
@@ -123,19 +130,23 @@ document.querySelector('.buttons').addEventListener('click', function(event) {
     }
 
     let datasetValue = target.dataset.value
-    let displayCalc = document.querySelector('.display-calc')
     
+    // Check if button clicked is a digit
     if (/^\d$/.test(datasetValue) && currentNumber.length < MAX_LENGTH) {
-        let currentDisplay = displayCalc.textContent
-        let lastDisplayChar = checkLastCharacter(currentDisplay)
+        let lastDisplayChar = checkLastCharacter(displayValueC)
+        console.log(displayValueC)
+        console.log(`Current character: ${lastDisplayChar}`)
 
-        if (lastDisplayChar === 'space') {
+        if (lastDisplayChar === 'none' || lastDisplayChar === 'number') {
+            console.log('First executed')
             let currentCalcDisplay = displayCalc.textContent
             currentNumber += datasetValue
             currentDigit = datasetValue
             displayCalc.textContent = `${currentCalcDisplay}${currentDigit}`
         }
-        else if (lastDisplayChar === 'number') {
+
+        if (lastDisplayChar === 'space') {
+            console.log('Second executed')
             let currentCalcDisplay = displayCalc.textContent
             currentNumber += datasetValue
             currentDigit = datasetValue
@@ -163,10 +174,31 @@ document.querySelector('.buttons').addEventListener('click', function(event) {
         assignVariables(' - ')
 
     } else if (datasetValue === 'decimal') {
-        console.log('decimal')
+        console.log('decimal');
+        if (!currentNumber.includes('.')) {
+            currentNumber += '.';
+            displayCalc.textContent += '.';
+        }
 
     } else if (datasetValue === 'equals') {
         console.log('equals')
+        if (numberOne != null && currentNumber !== '') {
+            console.log('test')
+            numberTwo = Number(currentNumber)
+            let resultOfOperation = operate(numberOne, numberTwo, operator)
+            resultCalc.textContent = resultOfOperation
+            numberOne = resultOfOperation
+            lastOperator = operator
+            lastOperand = numberTwo
+            numberTwo = null
+            currentNumber = ''
+            operator = ''
+        } else if (numberOne !== null && lastOperator && lastOperand !== null) {
+            console.log('hey')
+            let resultOfOperation = operate(numberOne, lastOperand, lastOperator)
+            resultCalc.textContent = resultOfOperation
+            numberOne = resultOfOperation
+        }
     }
 })
 
