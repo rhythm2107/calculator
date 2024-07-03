@@ -158,13 +158,10 @@ function clearDisplay() {
 function deleteDigit() {
 
     if (numberTwo) {
-        console.log('deleteDigit() printout numberTwo', typeof (numberTwo), numberTwo)
         numberTwo = numberTwo.slice(0, -1)
     } else if (operator) {
-        console.log('deleteDigit() printout operator', operator)
         operator = ""
     } else {
-        console.log('deleteDigit() printout numberOne', typeof (numberOne), numberOne)
         numberOne = numberOne.slice(0, -1)
     }
 }
