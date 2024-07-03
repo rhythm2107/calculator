@@ -160,20 +160,45 @@ function clearDisplay() {
 }
 
 function deleteDigit() {
-    let currentDisplay = displayCalc.textContent
-    let lastDisplayChar = checkLastCharacter(currentDisplay)
+    let currentDisplay = displayCalc.textContent;
+    let lastDisplayChar = checkLastCharacter(currentDisplay);
+    let currentDisplayArray = displayCalc.textContent.split(' ');
 
-    if (lastDisplayChar === 'space') {
-        let removedOperator = currentDisplay.slice(0, -3)
-        console.log('removed operator', removedOperator)
-        displayCalc.textContent = removedOperator
-        operator = ''
-    } else if (lastDisplayChar === 'number') {
-        let numberDeleteLast = currentNumber.slice(0, -1)
-        displayCalc.textContent = numberDeleteLast
-        currentNumber = numberDeleteLast
+    if (currentDisplayArray.length === 1) {
+        if (lastDisplayChar === 'number') {
+            let numberDeleteLast = currentNumber.slice(0, -1);
+            displayCalc.textContent = numberDeleteLast;
+            currentNumber = numberDeleteLast;
+        } else if (lastDisplayChar === 'other') {
+            console.log('its minus');
+            let removedMinus = currentDisplay.slice(0, -1);
+            displayCalc.textContent = removedMinus;
+            currentNumber = '';
+        }
+    } else if (currentDisplayArray.length === 3) {
+        if (currentDisplayArray[2] === '') {
+            let removedOperator = currentDisplay.slice(0, -3);
+            displayCalc.textContent = removedOperator;
+            operator = '';
+            currentNumber = numberOne.toString(); // Set currentNumber to numberOne for further deletions
+        } else if (lastDisplayChar === 'number') {
+            let numberDeleteLast = currentNumber.slice(0, -1);
+            currentDisplayArray[2] = numberDeleteLast;
+            displayCalc.textContent = currentDisplayArray.join(' ');
+            currentNumber = numberDeleteLast;
+        }
+    } else if (currentDisplayArray.length === 2) {
+        let removedOperator = currentDisplay.slice(0, -3);
+        currentDisplayArray = removedOperator.split(' ');
+        if (currentDisplayArray.length === 1) {
+            let numberDeleteLast = currentDisplayArray[0].slice(0, -1);
+            displayCalc.textContent = numberDeleteLast;
+            currentNumber = numberDeleteLast;
+            numberOne = Number(currentNumber); // Update numberOne to reflect the current value
+        }
     }
 }
+
 
 document.querySelector('.buttons').addEventListener('click', function(event) {
     let target = event.target;
