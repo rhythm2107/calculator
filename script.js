@@ -53,20 +53,12 @@ let lastPressed = ''
 const displayCalc = document.querySelector('.display-calc')
 const resultCalc = document.querySelector('.display-result')
 
-let lastOperand = ''
-let lastOperator = ''
-let equalClicked = false
-
 
 function clearDisplay() {
     currentNumber = ''
     numberOne = ''
     numberTwo = ''
     operator = ''
-    displayValueC = ''
-    displayValueR = ''
-    lastOperand = ''
-    lastOperator = ''
     lastPressed = ''
 
     displayCalc.textContent = ''
