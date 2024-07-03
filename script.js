@@ -15,26 +15,6 @@ function division(numberOne, numberTwo) {
     return +parseFloat(+numberOne / +numberTwo).toFixed(6)
 }
 
-function checkOperand(str) {
-    const lastChar = str.charAt(str.length - 2);
-
-    if (lastChar === '-') {
-        return '-'
-    }
-
-    if (lastChar === '+') {
-        return '+'
-    }
-
-    if (lastChar === '/') {
-        return '/'
-    }
-
-    if (lastChar === '*') {
-        return '*'
-    }
-}
-
 function updateCalcDisplay() {
     displayCalc.innerText = `${numberOne} ${operator} ${numberTwo}`
 }
