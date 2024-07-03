@@ -1,25 +1,18 @@
 // Math functions for + - / *
 function addition(numberOne, numberTwo) {
-    return numberOne + numberTwo
+    return +parseFloat(+numberOne + +numberTwo).toFixed(6)
 }
 
 function subtraction(numberOne, numberTwo) {
-    return numberOne - numberTwo
+    return +parseFloat(+numberOne - +numberTwo).toFixed(6)
 }
 
 function multiplication(numberOne, numberTwo) {
-    return numberOne * numberTwo
+    return +parseFloat(+numberOne * +numberTwo).toFixed(6)
 }
 
 function division(numberOne, numberTwo) {
-    return numberOne / numberTwo
-}
-
-// Helper function for trimming trailing zeros
-function roundAndTrim(number, decimals) {
-    let roundedString = number.toFixed(decimals);
-    let trimmedString = roundedString.replace(/(\.\d*[1-9])0+|\.0*$/, '$1');
-    return parseFloat(trimmedString);
+    return +parseFloat(+numberOne / +numberTwo).toFixed(6)
 }
 
 //Helper function to check last character in calc display
@@ -59,27 +52,32 @@ function checkOperand(str) {
     }
 }
 
+function updateCalcDisplay() {
+    displayCalc.innerText = `${numberOne} ${operator} ${numberTwo}`
+}
+
+function updateResultDisplay() {
+    numberOne = operate(numberOne, numberTwo, operator).toString()
+    numberTwo = ''
+    resultCalc.innerText = numberOne
+}
 
 // Function that calls correct Math function depending on operator variable
 function operate(numberOne, numberTwo, operator) {
-    if (operator === ' + ') {
-        let resultOfAddition = addition(numberOne, numberTwo)
-        return roundAndTrim(resultOfAddition, 5)
+    if (operator === '+') {
+        return addition(numberOne, numberTwo)
     }
 
-    if (operator === ' - ') {
-        let resultOfSubtraction = subtraction(numberOne, numberTwo)
-        return roundAndTrim(resultOfSubtraction, 5)
+    if (operator === '-') {
+        return subtraction(numberOne, numberTwo)
     }
 
-    if (operator === ' * ') {
-        let resultOfMultiplication = multiplication(numberOne, numberTwo)
-        return roundAndTrim(resultOfMultiplication, 5)
+    if (operator === '*') {
+        return multiplication(numberOne, numberTwo)
     }
 
-    if (operator === ' / ') {
-        let resultOfDivision = division(numberOne, numberTwo)
-        return roundAndTrim(resultOfDivision, 5)
+    if (operator === '/') {
+        return division(numberOne, numberTwo)
     }
 }
 
@@ -130,72 +128,46 @@ function assignVariables(newOperator) {
     
 }
 
-let currentNumber = ''
-let numberOne = null
-let numberTwo = null
-let operator = ''
-let displayValueC = ''
-let displayValueR = ''
-let lastOperand = null
-let lastOperator = ''
-let equalClicked = false
-
+// Global variables
 const MAX_LENGTH = 16
-
+let numberOne = ''
+let numberTwo = ''
+let operator = ''
+let lastPressed = ''
 const displayCalc = document.querySelector('.display-calc')
 const resultCalc = document.querySelector('.display-result')
 
+let lastOperand = ''
+let lastOperator = ''
+let equalClicked = false
+
+
 function clearDisplay() {
     currentNumber = ''
-    numberOne = null
-    numberTwo = null
+    numberOne = ''
+    numberTwo = ''
     operator = ''
     displayValueC = ''
     displayValueR = ''
-    lastOperand = null
+    lastOperand = ''
     lastOperator = ''
+    lastPressed = ''
     
     displayCalc.textContent = ''
     resultCalc.textContent = ''
 }
 
 function deleteDigit() {
-    let currentDisplay = displayCalc.textContent;
-    let lastDisplayChar = checkLastCharacter(currentDisplay);
-    let currentDisplayArray = displayCalc.textContent.split(' ');
 
-    if (currentDisplayArray.length === 1) {
-        if (lastDisplayChar === 'number') {
-            let numberDeleteLast = currentNumber.slice(0, -1);
-            displayCalc.textContent = numberDeleteLast;
-            currentNumber = numberDeleteLast;
-        } else if (lastDisplayChar === 'other') {
-            console.log('its minus');
-            let removedMinus = currentDisplay.slice(0, -1);
-            displayCalc.textContent = removedMinus;
-            currentNumber = '';
-        }
-    } else if (currentDisplayArray.length === 3) {
-        if (currentDisplayArray[2] === '') {
-            let removedOperator = currentDisplay.slice(0, -3);
-            displayCalc.textContent = removedOperator;
-            operator = '';
-            currentNumber = numberOne.toString(); // Set currentNumber to numberOne for further deletions
-        } else if (lastDisplayChar === 'number') {
-            let numberDeleteLast = currentNumber.slice(0, -1);
-            currentDisplayArray[2] = numberDeleteLast;
-            displayCalc.textContent = currentDisplayArray.join(' ');
-            currentNumber = numberDeleteLast;
-        }
-    } else if (currentDisplayArray.length === 2) {
-        let removedOperator = currentDisplay.slice(0, -3);
-        currentDisplayArray = removedOperator.split(' ');
-        if (currentDisplayArray.length === 1) {
-            let numberDeleteLast = currentDisplayArray[0].slice(0, -1);
-            displayCalc.textContent = numberDeleteLast;
-            currentNumber = numberDeleteLast;
-            numberOne = Number(currentNumber); // Update numberOne to reflect the current value
-        }
+    if (numberTwo) {
+        console.log('deleteDigit() printout numberTwo', typeof(numberTwo), numberTwo)
+        numberTwo = numberTwo.slice(0, -1)
+    } else if (operator) {
+        console.log('deleteDigit() printout operator', operator)
+        operator = ""
+    } else {
+        console.log('deleteDigit() printout numberOne', typeof(numberOne), numberOne)
+        numberOne = numberOne.slice(0, -1)
     }
 }
 
@@ -208,52 +180,57 @@ document.querySelector('.buttons').addEventListener('click', function(event) {
         target = target.parentElement;
     }
 
-    let datasetValue = target.dataset.value
+    let value = target.dataset.value
     
-    // Check if button clicked is a digit
-    if (/^\d$/.test(datasetValue) && currentNumber.length < MAX_LENGTH) {
-        let lastDisplayChar = checkLastCharacter(displayCalc.textContent)
+    // If button clicked is a digit
+    if (Number.isInteger(+value)) {
 
-        if (lastDisplayChar === 'none' || lastDisplayChar === 'number' || lastDisplayChar == 'other') {
-            let currentCalcDisplay = displayCalc.textContent
-
-            if (currentNumber === '0') {
-                currentNumber = datasetValue
-                displayCalc.textContent = currentCalcDisplay.slice(0, -1) + datasetValue
-            } else {
-                currentNumber += datasetValue
-                displayCalc.textContent = `${currentCalcDisplay}${datasetValue}`
-            }
+        if (lastPressed == 'equals') {
+            numberOne = value
+            operator = ""
+            numberTwo = ""
+        } else if (numberTwo && numberTwo === '0') {
+            numberTwo = value
+        } else if (!operator && numberOne === '0') {
+            numberOne = value
+        } else if (operator) {
+            numberTwo += value
+        } else {
+            numberOne += value
         }
+    }
 
-        if (lastDisplayChar === 'space') {
-            let currentCalcDisplay = displayCalc.textContent
-            currentNumber += datasetValue
-            currentDigit = datasetValue
-            displayCalc.textContent = `${currentCalcDisplay}${currentDigit}`
-        }
-
-    } else if (datasetValue === 'clear') {
-        console.log('clear')
+    if (value === 'clear') {
         clearDisplay()
 
-    } else if (datasetValue === 'delete') {
-        console.log('delete')
+    } else if (value === 'delete') {
         deleteDigit()
 
-    } else if (datasetValue === 'divide') {
-        assignVariables(' / ')
+    } else if (value === 'divide') {
+        if (numberTwo) {
+            updateResultDisplay()
+        }
+        operator = "/"
 
-    } else if (datasetValue === 'multiply') {
-        assignVariables(' * ')
+    } else if (value === 'multiply') {
+        if (numberTwo) {
+            updateResultDisplay()
+        }
+        operator = "*"
 
-    } else if (datasetValue === 'plus') {
-        assignVariables(' + ')
+    } else if (value === 'plus') {
+        if (numberTwo) {
+            updateResultDisplay()
+        }
+        operator = "+"
 
-    } else if (datasetValue === 'minus') {
-        assignVariables(' - ')
+    } else if (value === 'minus') {
+        if (numberTwo) {
+            updateResultDisplay()
+        }
+        operator = "-"
 
-    } else if (datasetValue === 'decimal') {
+    } else if (value === 'decimal') {
         console.log('decimal');
         if (!currentNumber.includes('.')) {
             if (currentNumber.length === 0) {
@@ -265,7 +242,7 @@ document.querySelector('.buttons').addEventListener('click', function(event) {
             }
         }
 
-    } else if (datasetValue === 'equals') {
+    } else if (value === 'equals') {
         console.log('equals')
         if (numberOne != null && currentNumber !== '') {
             numberTwo = Number(currentNumber)
@@ -284,6 +261,8 @@ document.querySelector('.buttons').addEventListener('click', function(event) {
             numberOne = resultOfOperation
         }
     }
+
+    updateCalcDisplay()
 })
 
 document.addEventListener('keydown', function(event) {
