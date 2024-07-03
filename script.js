@@ -24,7 +24,7 @@ function checkLastCharacter(str) {
     }
     if (lastChar === ' ') {
         return 'space';
-    } 
+    }
     else if (!isNaN(parseInt(lastChar))) {
         return 'number';
     }
@@ -38,7 +38,7 @@ function checkOperand(str) {
     if (lastChar === '-') {
         return '-'
     }
-    
+
     if (lastChar === '+') {
         return '+'
     }
@@ -81,52 +81,50 @@ function operate(numberOne, numberTwo, operator) {
     }
 }
 
-function assignVariables(newOperator) {
-    let lastDisplayChar = checkLastCharacter(displayCalc.textContent)
-    if (lastDisplayChar === 'number') {
-        if (numberOne === null && numberTwo === null) {
-            displayCalc.textContent += newOperator
-            numberOne = Number(currentNumber)
-            currentNumber = ''
-            operator = newOperator
-    
-        } else if (numberOne !== null && numberTwo === null && equalClicked === false) {
-            console.log('EXECUTED')
-            numberTwo = Number(currentNumber)
-            console.log('current number', numberTwo)
-            currentNumber = ''
-            let resultOfOperation = operate(numberOne, numberTwo, operator)
-    
-            operator = newOperator
-            resultCalc.textContent = resultOfOperation
-            displayCalc.textContent = resultOfOperation
-            displayCalc.textContent += newOperator
-            numberOne = resultOfOperation
-            numberTwo = null
+// function assignVariables(newOperator) {
+//     let lastDisplayChar = checkLastCharacter(displayCalc.textContent)
+//     if (lastDisplayChar === 'number') {
+//         if (numberOne === null && numberTwo === null) {
+//             displayCalc.textContent += newOperator
+//             numberOne = Number(currentNumber)
+//             currentNumber = ''
+//             operator = newOperator
 
-        } else if (equalClicked === true) {
-            equalClicked = false
-            operator = newOperator
-            displayCalc.textContent = resultCalc.textContent
-            displayCalc.textContent += operator
-        }
-        
-    } // Logic for switching operators if you click them in a row 
-    else if (lastDisplayChar === 'space') {
-        console.log('before', displayCalc.textContent)
-        let removeOperator = displayCalc.textContent.slice(0, -3) + newOperator
-        displayCalc.textContent = removeOperator
-        operator = newOperator
+//         } else if (numberOne !== null && numberTwo === null && equalClicked === false) {
+//             console.log('EXECUTED')
+//             numberTwo = Number(currentNumber)
+//             console.log('current number', numberTwo)
+//             currentNumber = ''
+//             let resultOfOperation = operate(numberOne, numberTwo, operator)
 
-    } // Logic for numberOne being negative
-    else if (lastDisplayChar === 'none' && newOperator === ' - ') {
-        console.log('Minus was clicked')
-        displayCalc.textContent += '-'
-        currentNumber += '-'
-    }
+//             operator = newOperator
+//             resultCalc.textContent = resultOfOperation
+//             displayCalc.textContent = resultOfOperation
+//             displayCalc.textContent += newOperator
+//             numberOne = resultOfOperation
+//             numberTwo = null
 
-    
-}
+//         } else if (equalClicked === true) {
+//             equalClicked = false
+//             operator = newOperator
+//             displayCalc.textContent = resultCalc.textContent
+//             displayCalc.textContent += operator
+//         }
+
+//     } // Logic for switching operators if you click them in a row 
+//     else if (lastDisplayChar === 'space') {
+//         console.log('before', displayCalc.textContent)
+//         let removeOperator = displayCalc.textContent.slice(0, -3) + newOperator
+//         displayCalc.textContent = removeOperator
+//         operator = newOperator
+
+//     } // Logic for numberOne being negative
+//     else if (lastDisplayChar === 'none' && newOperator === ' - ') {
+//         console.log('Minus was clicked')
+//         displayCalc.textContent += '-'
+//         currentNumber += '-'
+//     }
+// }
 
 // Global variables
 const MAX_LENGTH = 16
@@ -152,7 +150,7 @@ function clearDisplay() {
     lastOperand = ''
     lastOperator = ''
     lastPressed = ''
-    
+
     displayCalc.textContent = ''
     resultCalc.textContent = ''
 }
@@ -160,28 +158,28 @@ function clearDisplay() {
 function deleteDigit() {
 
     if (numberTwo) {
-        console.log('deleteDigit() printout numberTwo', typeof(numberTwo), numberTwo)
+        console.log('deleteDigit() printout numberTwo', typeof (numberTwo), numberTwo)
         numberTwo = numberTwo.slice(0, -1)
     } else if (operator) {
         console.log('deleteDigit() printout operator', operator)
         operator = ""
     } else {
-        console.log('deleteDigit() printout numberOne', typeof(numberOne), numberOne)
+        console.log('deleteDigit() printout numberOne', typeof (numberOne), numberOne)
         numberOne = numberOne.slice(0, -1)
     }
 }
 
 
-document.querySelector('.buttons').addEventListener('click', function(event) {
+document.querySelector('.buttons').addEventListener('click', function (event) {
     let target = event.target;
-    
+
     // Check if the clicked element is an icon
     if (target.tagName === 'I') {
         target = target.parentElement;
     }
 
     let value = target.dataset.value
-    
+
     // If button clicked is a digit
     if (Number.isInteger(+value)) {
 
@@ -231,41 +229,42 @@ document.querySelector('.buttons').addEventListener('click', function(event) {
         operator = "-"
 
     } else if (value === 'decimal') {
-        console.log('decimal');
-        if (!currentNumber.includes('.')) {
-            if (currentNumber.length === 0) {
-                currentNumber += '0.';
-                displayCalc.textContent += '0.';
+
+        if (lastPressed == 'equals') {
+            numberOne = '0.'
+            operator = ''
+            numberTwo = ''
+        } else if (operator && !numberTwo.includes('.')) {
+            if (!numberTwo) {
+                numberTwo = '0.'
             } else {
-                currentNumber += '.';
-                displayCalc.textContent += '.';
+                numberTwo += '.'
+            }
+        } else if (!operator && !numberOne.includes('.')) {
+            if (!numberOne) {
+                numberOne = '0.'
+            } else {
+                numberOne += '.'
             }
         }
 
     } else if (value === 'equals') {
-        console.log('equals')
-        if (numberOne != null && currentNumber !== '') {
-            numberTwo = Number(currentNumber)
-            let resultOfOperation = operate(numberOne, numberTwo, operator)
-            resultCalc.textContent = resultOfOperation
-            numberOne = resultOfOperation
-            lastOperator = operator
-            lastOperand = numberTwo
-            numberTwo = null
-            currentNumber = ''
-            operator = ''
-            equalClicked = true
-        } else if (numberOne !== null && lastOperator && lastOperand !== null) {
-            let resultOfOperation = operate(numberOne, lastOperand, lastOperator)
-            resultCalc.textContent = resultOfOperation
-            numberOne = resultOfOperation
+        if (lastPressed == 'equals') {
+            numberOne = resultCalc.innerText
+        }
+
+        if (numberOne && numberTwo && operator) {
+            resultCalc.innerText = operate(numberOne, numberTwo, operator)
+        } else {
+            resultCalc.innerText = numberOne || "0"
         }
     }
 
     updateCalcDisplay()
 })
 
-document.addEventListener('keydown', function(event) {
+
+document.addEventListener('keydown', function (event) {
     const key = event.key
     console.log(key)
 })
