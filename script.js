@@ -79,18 +79,7 @@ function deleteDigit() {
     }
 }
 
-
-document.querySelector('.buttons').addEventListener('click', function (event) {
-    let target = event.target;
-
-    // Check if the clicked element is an icon
-    if (target.tagName === 'I') {
-        target = target.parentElement;
-    }
-
-    let value = target.dataset.value
-
-    // If button clicked is a digit
+function pressButton(value) {
     if (Number.isInteger(+value)) {
 
         if (lastPressed == 'equals') {
@@ -170,10 +159,53 @@ document.querySelector('.buttons').addEventListener('click', function (event) {
     }
 
     updateCalcDisplay(value)
+}
+
+document.querySelector('.buttons').addEventListener('click', function (event) {
+    let target = event.target;
+
+    // Check if the clicked element is an icon
+    if (target.tagName === 'I') {
+        target = target.parentElement;
+    }
+
+    let value = target.dataset.value
+    pressButton(value)
 })
 
 
 document.addEventListener('keydown', function (event) {
-    const key = event.key
-    console.log(key)
+    if (Number.isInteger(+event.key)) {
+        pressButton(event.key)
+    } else {
+        switch (event.key) {
+            case ".":
+                pressButton('decimal')
+                break
+            case "Enter":
+            case "=":
+                pressButton('equals')
+                break
+            case "/":
+                pressButton('divide')
+                break
+            case "*":
+                pressButton('multiply')
+                break
+            case "-":
+                pressButton('minus')
+                break
+            case "+":
+                pressButton('plus')
+                break
+            case "Delete":
+            case "Backspace":
+                pressButton('delete')
+                break
+            case "Escape":
+                pressButton('clear')
+                break
+            
+        }
+    }
 })
