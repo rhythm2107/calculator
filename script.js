@@ -15,8 +15,12 @@ function division(numberOne, numberTwo) {
     return +parseFloat(+numberOne / +numberTwo).toFixed(6)
 }
 
-function updateCalcDisplay() {
-    displayCalc.innerText = `${numberOne} ${operator} ${numberTwo}`
+function updateCalcDisplay(value) {
+    displayCalc.innerText = `${numberOne} ${operator
+        .replace('*', 'x')
+        .replace('/', '÷')} ${numberTwo}`
+
+    lastPressed = value
 }
 
 function updateResultDisplay() {
@@ -66,7 +70,6 @@ function clearDisplay() {
 }
 
 function deleteDigit() {
-
     if (numberTwo) {
         numberTwo = numberTwo.slice(0, -1)
     } else if (operator) {
@@ -159,7 +162,6 @@ document.querySelector('.buttons').addEventListener('click', function (event) {
         if (lastPressed == 'equals') {
             numberOne = resultCalc.innerText
         }
-
         if (numberOne && numberTwo && operator) {
             resultCalc.innerText = operate(numberOne, numberTwo, operator)
         } else {
@@ -167,7 +169,7 @@ document.querySelector('.buttons').addEventListener('click', function (event) {
         }
     }
 
-    updateCalcDisplay()
+    updateCalcDisplay(value)
 })
 
 
