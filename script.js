@@ -15,23 +15,6 @@ function division(numberOne, numberTwo) {
     return +parseFloat(+numberOne / +numberTwo).toFixed(6)
 }
 
-//Helper function to check last character in calc display
-function checkLastCharacter(str) {
-    const lastChar = str.charAt(str.length - 1);
-
-    if (str.length === 0) {
-        return 'none'
-    }
-    if (lastChar === ' ') {
-        return 'space';
-    }
-    else if (!isNaN(parseInt(lastChar))) {
-        return 'number';
-    }
-    console.log('other')
-    return 'other'; // Return a default value for other characters
-}
-
 function checkOperand(str) {
     const lastChar = str.charAt(str.length - 2);
 
@@ -80,51 +63,6 @@ function operate(numberOne, numberTwo, operator) {
         return division(numberOne, numberTwo)
     }
 }
-
-// function assignVariables(newOperator) {
-//     let lastDisplayChar = checkLastCharacter(displayCalc.textContent)
-//     if (lastDisplayChar === 'number') {
-//         if (numberOne === null && numberTwo === null) {
-//             displayCalc.textContent += newOperator
-//             numberOne = Number(currentNumber)
-//             currentNumber = ''
-//             operator = newOperator
-
-//         } else if (numberOne !== null && numberTwo === null && equalClicked === false) {
-//             console.log('EXECUTED')
-//             numberTwo = Number(currentNumber)
-//             console.log('current number', numberTwo)
-//             currentNumber = ''
-//             let resultOfOperation = operate(numberOne, numberTwo, operator)
-
-//             operator = newOperator
-//             resultCalc.textContent = resultOfOperation
-//             displayCalc.textContent = resultOfOperation
-//             displayCalc.textContent += newOperator
-//             numberOne = resultOfOperation
-//             numberTwo = null
-
-//         } else if (equalClicked === true) {
-//             equalClicked = false
-//             operator = newOperator
-//             displayCalc.textContent = resultCalc.textContent
-//             displayCalc.textContent += operator
-//         }
-
-//     } // Logic for switching operators if you click them in a row 
-//     else if (lastDisplayChar === 'space') {
-//         console.log('before', displayCalc.textContent)
-//         let removeOperator = displayCalc.textContent.slice(0, -3) + newOperator
-//         displayCalc.textContent = removeOperator
-//         operator = newOperator
-
-//     } // Logic for numberOne being negative
-//     else if (lastDisplayChar === 'none' && newOperator === ' - ') {
-//         console.log('Minus was clicked')
-//         displayCalc.textContent += '-'
-//         currentNumber += '-'
-//     }
-// }
 
 // Global variables
 const MAX_LENGTH = 16
