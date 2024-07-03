@@ -209,3 +209,6 @@ document.addEventListener('keydown', function (event) {
         }
     }
 })
+
+// Add credits
+console.log("Style, design and parts of code inspired by mmackz https://github.com/mmackz")
