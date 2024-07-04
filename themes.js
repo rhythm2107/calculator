@@ -19,9 +19,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 document.documentElement.style.setProperty('--gradient', 'linear-gradient(to right, #F29492, #114357)');
                 document.documentElement.style.setProperty('--highlight', '#F29492');
             } else if (this.classList.contains('t3')) {
-                document.documentElement.style.setProperty('--bg-solid', '#243B55');
-                document.documentElement.style.setProperty('--gradient', 'linear-gradient(to right, #243B55, #141E30)');
-                document.documentElement.style.setProperty('--highlight', '#141E30');
+                document.documentElement.style.setProperty('--bg-solid', '#f79d00');
+                document.documentElement.style.setProperty('--gradient', 'linear-gradient(to right, #64f38c, #f79d00)');
+                document.documentElement.style.setProperty('--highlight', '#64f38c');
             }
         });
     });

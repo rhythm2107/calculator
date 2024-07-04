@@ -13,7 +13,7 @@
 html, body {
     height: 100%;
     font-family: "Fira Sans", sans-serif;
-    background-color:white;
+    background-color:rgba(245, 239, 239, 0.568);
 }
 
 body {
@@ -22,15 +22,15 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    border: 5px solid green;
 }
 
 .themes {
     display: flex;
     justify-content: space-evenly;
-    /* border: 3px solid red; */
     width: 340px;
     height: 60px;
+    margin-bottom: 5px;
+    min-height: 60px;
 }
 
 .theme {
@@ -41,7 +41,9 @@ body {
     display: flex;
     flex-direction: column;
     height: 560px;
+    min-height: 560px;
     width: 340px;
+    min-width: 340px;
     margin-top: 20px;
     margin-bottom: 50px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -171,7 +173,7 @@ body {
 }
 
 .t1 {
-    background: linear-gradient(120deg, #a6c0fe 0%, #f68084 100%);
+    background: linear-gradient(130deg, #a6c0fe 0%, #f68084 100%);
     cursor: pointer;
     border-radius: 10px;
     border: 2px solid black;
@@ -179,7 +181,7 @@ body {
 }
 
 .t2 {
-    background: linear-gradient(to right, #F29492, #114357);
+    background: linear-gradient(130deg, #F29492, #114357);
     cursor: pointer;
     border-radius: 10px;
     border: 2px solid black;
@@ -187,9 +189,17 @@ body {
 }
 
 .t3 {
-    background: linear-gradient(to right, #243B55, #141E30);
+    background: linear-gradient(130deg, #64f38c, #f79d00);
     cursor: pointer;
     border-radius: 10px;
     border: 2px solid black;
     box-sizing: border-box;
+}
+
+.footer i {
+    transition: transform 0.3s ease;
+}
+
+.footer i:hover {
+    transform: scale(1.2);
 }
