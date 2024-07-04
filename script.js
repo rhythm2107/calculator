@@ -29,6 +29,13 @@ function updateResultDisplay() {
     resultCalc.innerText = numberOne
 }
 
+function formatDisplay() {
+    if (displayCalc.innerText.length > 32) {
+        alert('Input is too long!')
+        clearDisplay()
+    }
+}
+
 // Function that calls correct Math function depending on operator variable
 function operate(numberOne, numberTwo, operator) {
     if (operator === '+') {
@@ -59,12 +66,10 @@ const resultCalc = document.querySelector('.display-result')
 
 
 function clearDisplay() {
-    currentNumber = ''
     numberOne = ''
     numberTwo = ''
     operator = ''
     lastPressed = ''
-
     displayCalc.textContent = ''
     resultCalc.textContent = ''
 }
