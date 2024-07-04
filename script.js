@@ -34,6 +34,22 @@ function formatDisplay() {
         alert('Input is too long!')
         clearDisplay()
     }
+
+    if (displayCalc.innerText.length > 20) {
+        if (!displayCalc.classList.contains('small-cd')) {
+            displayCalc.classList.add('small-cd')
+        }
+    } else {
+        displayCalc.classList.remove('small-cd')
+    }
+
+    if (resultCalc.innerText.length > 10) {
+        if (!resultCalc.classList.contains('small-rd')) {
+            resultCalc.classList.add('small-rd')
+        }
+    } else {
+        resultCalc.classList.remove('small-rd')
+    }
 }
 
 // Function that calls correct Math function depending on operator variable
@@ -164,6 +180,7 @@ function pressButton(value) {
     }
 
     updateCalcDisplay(value)
+    formatDisplay()
 }
 
 document.querySelector('.buttons').addEventListener('click', function (event) {

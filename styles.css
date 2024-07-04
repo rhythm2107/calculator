@@ -1,3 +1,9 @@
+:root {
+    --bg-solid: #f68084;
+    --gradient: linear-gradient(120deg, #a6c0fe 0%, #f68084 100%);
+    --highlight: #a6c0fe;
+}
+
 * {
     padding: 0;
     margin: 0;
@@ -28,8 +34,7 @@ body {
 }
 
 .theme {
-    width: 20%;
-    border: 2px solid purple;
+    width: 60px;
 }
 
 .main {
@@ -39,7 +44,7 @@ body {
     width: 340px;
     margin-top: 20px;
     margin-bottom: 50px;
-    box-shadow: rgba(139, 129, 129, 0.35) 0px 5px 15px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     border-radius: 8px;
     background-color: white;
     overflow: hidden;
@@ -51,7 +56,7 @@ body {
     height: 150px;
     width: 100%;
     padding: 10px;
-    background-image: linear-gradient(120deg, #a6c0fe 0%, #f68084 100%);
+    background-image: var(--gradient)
 }
 
 .display-result {
@@ -61,9 +66,10 @@ body {
     flex: 2; /* 75% */
     justify-content: flex-end;
     align-items: center;
-    font-size: 42px;
+    font-size: 46px;
     color: white;
     padding-right: 8px;
+    padding-top: 20px;
 }
 
 .display-calc {
@@ -83,6 +89,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     height: 410px;
+    font-size: 20px;
 }
 
 .button {
@@ -96,24 +103,93 @@ body {
 
 #clear {
     width: 50%;
+    border-bottom: 1px solid var(--bg-solid);
+    border-right: 1px solid var(--bg-solid);
+    font-size: 20px;
+    font-weight: 700;
+    background: var(--bg-solid);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 #equals {
     width: 50%;
-}
-
-.active {
-    outline: 2px solid green;
+    color: white;
+    background-image: var(--gradient)
 }
 
 #delete,
 #divide,
 #multiply,
 #minus,
-#plus {
+#plus,
+#decimal {
     background-color: hsla(0, 0%, 80%, 0.5);
 }
 
-#equals {
-    background-image: linear-gradient(120deg, #a6c0fe 0%, #f68084 100%);
+.small-cd {
+    font-size: 15px;
+}
+
+.small-rd {
+    font-size: 25px;
+}
+
+.number {
+    font-size: 21px;
+    font-weight: 700
+}
+
+#delete:hover,
+#divide:hover,
+#multiply:hover,
+#minus:hover,
+#plus:hover,
+#decimal:hover,
+.number:hover {
+    color: var(--highlight);
+    cursor: pointer;
+}
+
+#delete:active,
+#divide:active,
+#multiply:active,
+#minus:active,
+#plus:active,
+#decimal:active,
+.number:active {
+    border: 2px solid rgba(128, 128, 128, 0.205);
+}
+
+#clear:hover,
+#equals:hover {
+    cursor:pointer;
+}
+
+.active {
+    outline: 2px solid hotpink;
+}
+
+.t1 {
+    background: linear-gradient(120deg, #a6c0fe 0%, #f68084 100%);
+    cursor: pointer;
+    border-radius: 10px;
+    border: 2px solid black;
+    box-sizing: border-box;
+}
+
+.t2 {
+    background: linear-gradient(to right, #F29492, #114357);
+    cursor: pointer;
+    border-radius: 10px;
+    border: 2px solid black;
+    box-sizing: border-box;
+}
+
+.t3 {
+    background: linear-gradient(to right, #243B55, #141E30);
+    cursor: pointer;
+    border-radius: 10px;
+    border: 2px solid black;
+    box-sizing: border-box;
 }
