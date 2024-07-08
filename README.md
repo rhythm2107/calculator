@@ -1,14 +1,15 @@
-# Simple JavaScript Calculator
-
-![Calculator Screenshot](calculator.png)
+# Modern JavaScript Calculator
 
 ## Live Demo
 
 [https://rhythm2107.github.io/calculator/](https://rhythm2107.github.io/calculator/)
 
+![Calculator Screenshot](calculator.png)
+
 ## Description
 
-This simple yet modern calculator application is built entirely with HTML, CSS, and JavaScript. Designed as part of [The Odin Project](https://www.theodinproject.com/), it provides basic arithmetic operations with a clean, user-friendly interface.
+I built this simple yet modern calculator as part of an assignment for [The Odin Project](https://www.theodinproject.com/).
+It’s made entirely with HTML, CSS, and JavaScript, and I used it as a way to practice working with Flexbox. The result is a clean, user-friendly interface that handles basic arithmetic operations.
 
 ## Features
 
@@ -29,13 +30,13 @@ This simple yet modern calculator application is built entirely with HTML, CSS, 
 1. Clone this repository:
 
 ```bash
-git clone https://github.com/yourusername/simple-calculator.git
+git clone https://github.com/yourusername/calculator.git
 ```
 
 2. Navigate to the project directory:
 
 ```bash
-cd simple-calculator
+cd calculator
 ```
 
 3. Open `index.html` in your preferred web browser.
