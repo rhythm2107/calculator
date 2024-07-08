@@ -25,6 +25,7 @@ It’s made entirely with HTML, CSS, and JavaScript, and I used it as a way to p
 - HTML
 - CSS
 - JavaScript
+- Flexbox
 
 ## How to Use
 
