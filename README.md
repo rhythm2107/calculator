@@ -18,6 +18,7 @@ It’s made entirely with HTML, CSS, and JavaScript, and I used it as a way to p
 - Responsive layout with automatic font-size adjustment for lengthy calculations.
 - Keyboard and mouse input support for intuitive usability.
 - Built-in input validation to handle incorrect or excessive inputs gracefully.
+- Includes 3 color theme options for a customizable look.
 
 ## Technologies Used
 
